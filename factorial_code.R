@@ -129,3 +129,4 @@ range_results <- map(ranges, get_benchmark)
 range_results
 #Send R Output to a File
 sink()
+warning(call. = FALSE)
