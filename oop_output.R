@@ -19,10 +19,26 @@ LongitudinalData <- setRefClass("LongitudinalData",
                                   timpoint = "integer"
                                 ),
                                 methods = list(
-                                  subject.LongtitudinalData = function(){
+                                  #subject: a generic function for extracting subject-specific information
+                                  subject = function(x,y){
+                                    require(dplyr)
+                                    x %>% 
+                                      filter(id == y)
                                     
                                   },
-                                  print.LongtitudinalData = function(){}
+                                  #subject: a generic function for extracting subject-specific information
+                                  print = function(df){
+                                    paste0("Longitudinal dataset with", length(unique(df$id)), "subjects")
+                                  },
+                                  #visit: a generic function for extracting visit-specific information
+                                  visit = function(df){
+                                    paste0("Longitudinal dataset with", length(unique(df$visit)), "subjects")
+                                  },
+                                  
+                                  #room: a generic function for extracting room-specific information
+                                  room = function(df){
+                                    paste0("Longitudinal dataset with", length(unique(df$room)), "subjects")
+                                  }
                                   
                                   
                                   ))
@@ -30,6 +46,14 @@ LongitudinalData <- setRefClass("LongitudinalData",
 #In addition you will need to implement the following functions
 
 #make_LD: a function that converts a data frame into a “LongitudinalData” object
-#subject: a generic function for extracting subject-specific information
-#visit: a generic function for extracting visit-specific information
-#room: a generic function for extracting room-specific information
+make_LD = function(obj){
+  LongitudinalData$new(
+    id = obj$id, 
+    visit = obj$visit, 
+    room = obj$room, 
+    value = obj$value, 
+    timepoint = obj$timepoint )
+}
+
+
+
